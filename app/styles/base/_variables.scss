@@ -1,13 +1,6 @@
 // Colors
-$grey: #333333;
-$light-grey: #fafafa;
-$light-grey-border: #eeeeee;
-$light-color: #aaa;
-//.Navigation Colors
-$nav-background: $grey;
-$nav-text-color: white;
 
-// Clock variable
-$clock-text-color: while;
-$clock-bg-color: #B5D0E2;
-$clock-border-color: #2099E8;
+
+// font
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&subset=vietnamese);
+$open-sans: 'Open Sans', sans-serif;

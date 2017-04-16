@@ -29,7 +29,8 @@ module.exports = {
         modulesDirectories: [
             'node_modules',
             './app/components',
-            './app/api'
+            './app/api',
+            './app/img'
         ],
         alias: {
             applicationStyles: 'app/styles/app.scss'
@@ -45,6 +46,13 @@ module.exports = {
                 },
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 25000,
+                },
             }
         ]
     },

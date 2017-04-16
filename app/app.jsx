@@ -3,7 +3,9 @@ var ReactDOM = require('react-dom');
 var {Route, Router, IndexRoute, hashHistory} = require('react-router');
 var {Provider} = require('react-redux');
 
-
+//Components
+var Main = require('Main');
+var Content = require('content');
 
 // Load foundation
 // add all features of foundation
@@ -14,6 +16,10 @@ $(document).foundation();
 require('style!css!sass!applicationStyles');
 
 ReactDOM.render(
-    <p>Hello React Redux</p>,
+    <Router history={hashHistory}>
+        <Route path="/" component={Main}>
+            <IndexRoute component={Content} />
+        </Route>
+    </Router>,
     document.getElementById("app")
 )
