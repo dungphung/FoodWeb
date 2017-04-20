@@ -1,28 +1,24 @@
 var React = require('react');
 var {Link} = require('react-router');
+var {connect} = require('react-redux')
+var Nav = require('Navbar');
 
 var Header = React.createClass({
-
     render: function() {
+        var {button} = this.props;
         return (
-            <header className="header-main">
-                <div className="row">
-                    <img src="resources/img/logo2.png" alt="logo" className="logo"/>
-                    <ul className="main-nav">
-                        <li> <Link to="/" >Góc Kinh nghiệm</Link></li>
-                        <li> <Link to="/" >Địa danh</Link></li>
-                        <li> <Link to="/">Check-in</Link></li>
-                        <li> <Link to="/">Đăng ký</Link></li>
-                    </ul>
-                </div>
+            <header className={button === 0 ? "header-main" : "header-main-2"}>
+                <Nav />
                 <div className="hero-text-box">
-                    <h1>Còn trẻ mà không đi đó đi đây<br/> thì bạn định chờ đến bao giờ nữa.</h1>
-                    <Link to="/" className="btn btn-full">Tôi muốn đi</Link>
-                    <Link to="/" className="btn btn-ghost">Hiện thị nhiều hơn</Link>
+                        {() =>{ return button === 0 ? (<h1>Còn trẻ mà không đi đó đi đây<br/> thì bạn định chờ đến bao giờ nữa.</h1>) : ""}}
                 </div>
             </header>
         )
     }
 })
 
-module.exports = Header;
+module.exports = connect(
+    (state) => {
+        return state;
+    }
+)(Header);

@@ -18,16 +18,6 @@
     background-position: center;
     height: 100vh;
 
-    .main-nav {
-        float: right;
-        list-style: none;
-
-        li {
-            display: inline-block;
-            margin-left: 40px;
-            margin-top: 55px;
-        }
-    }
 
     .logo {
         height: 100px;
@@ -37,7 +27,15 @@
     }
 
     .main-nav {
+
+        float: right;
+        list-style: none;
+
         li {
+            display: inline-block;
+            margin-left: 40px;
+            margin-top: 55px;
+            
             a:link, a:visited{
                 padding: 8px 0;
                 color: #fff;
@@ -69,7 +67,7 @@
         display: inline-block;
         padding: 10px 30px;
         font-weight: 600;
-        text-decoration: noen;
+        text-decoration: none;
         border-radius: 200px;
         transition: background-color 0.2s, border 0.2s, color 0.2s;
     }
