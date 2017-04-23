@@ -4,33 +4,31 @@ var actions = require('actions');
 var axios = require('axios');
 var {Router} = require('react-router');
 
-
+import { browserHistory } from 'react-router';
 var Signup = React.createClass({
     componentWillMount: function() {
         var {dispatch, button, login} = this.props;
+        dispatch(actions.resetLogin());
         if (button === 0) {
             dispatch(actions.pressSignup());
-        }
-
-        if (login.isLogin) {
-            Router.transition('/');
         }
     },
     componentWillUnmount: function() {
         var {dispatch} = this.props;
         dispatch(actions.resetButton());
+        dispatch(actions.resetLogin());
     },
     componentWillReceiveProps: function(newProps) {
 
     },
     handleSubmit: function(e) {
+        var {dispatch} = this.props;
         e.preventDefault();
         var {dispatch} = this.props;
         var tenDangNhap = this.refs.tenDangNhap.value,
             hoTen = this.refs.hoTen.value,
             email = this.refs.email.value,
             matKhau = this.refs.matKhau.value;
-        console.log(tenDangNhap);
         axios.post('http://localhost:8080/api/users', {
             tenDangNhap: tenDangNhap,
             hoTen: hoTen,
@@ -40,15 +38,28 @@ var Signup = React.createClass({
         .then(function (response) {
             if (response.data.error == false) {
                 dispatch(actions.loginSuccess(tenDangNhap));
-                Router.transition('/');
+                browserHistory.push('/');
+            } else {
+                dispatch(actions.loginFailed());
             }
         })
     },
     render: function() {
+        var {login} = this.props;
+        var loadMessage = function() {
+            if (login.isFetching === true) {
+                return <h4>Đang kiểm tra.....</h4>
+            } else if (login.isLogin === 2){
+                return <h4 className="Warring">Tên đăng nhập đã tồn tại!!</h4>
+            }
+        }
         return (
             <section className="section-signup">
                 <div className="row">
                     <h2>ĐĂNG KÝ</h2>
+                </div>
+                <div className="message-login">
+                    {loadMessage()}
                 </div>
                 <div className="row">
                 <form onSubmit={this.handleSubmit} className="signup-form">

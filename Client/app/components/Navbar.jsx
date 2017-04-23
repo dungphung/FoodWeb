@@ -12,10 +12,17 @@ var Nav = React.createClass({
         var {button, dispatch, login} = this.props;
         var LoadChucNangDangNhap = () => {
             console.log('Login navbar: ', login.isLogin)
-            if (login.isLogin === true) {
+            if (login.isLogin === 1) {
                return ( 
                 <ul className="main-nav">
-                    <li> <Link to="/" >Đăng xuất</Link></li>
+                    <li onClick={
+                        () => {
+                            dispatch(actions.resetLogin());
+                            dispatch(actions.resetButton());
+                            dispatch(actions.resetButtonFunc());
+                        }
+
+                    }> <Link to="/" >Đăng xuất</Link></li>
                 </ul> 
                )
             }
@@ -44,13 +51,23 @@ var Nav = React.createClass({
 
             }
         }
+        var LoadFuncAfterLogin = function() {
+            if(login.isLogin === 1) {
+                return (
+                     <ul className="main-nav">
+                        <li> <Link to="/">Trang chủ</Link></li>
+                        <li><Link to="/followers" >Tìm bạn bè</Link></li>              
+                        <li> <Link to="/uploadimage" >Đăng ảnh</Link></li>
+                        <li> <Link to="/myimages" >Ảnh của tôi</Link></li>
+                    </ul>
+                )
+            }
+        }
         return (
             <div className="row ">
                     <img src="resources/img/logo2.png" alt="logo" className="logo"/>  
                     {LoadChucNangDangNhap()}
-                    <ul className="main-nav">              
-                        <li onClick={() => {dispatch(actions.pressUpload())}}> <Link to="/uploadimage" >Đăng ảnh</Link></li>
-                    </ul>
+                    {LoadFuncAfterLogin()}
             </div>
         )
     }

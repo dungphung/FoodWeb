@@ -5,17 +5,24 @@ var axios = require('axios');
 var Dropzone = require('react-dropzone');
 var sha1 = require('sha1');
 var superagent = require('superagent')
+var actions = require('actions');
+
 
 var UpLoadImage = React.createClass({
     getInitialState: function() {
         return {
-            images: []
+            images: [],
+            saveSuccess: 0
         }
     }, 
+    componentWillReceiveProps: function(nextProps) {
+        
+    },
    uploadFile: function(files) {
-        console.log('uploadFile: ');
+        var {dispatch, login} = this.props;
+        //console.log('uploadFile: ');
         var image = files;
-        console.log(image);
+        //console.log(image);
         var cloudName = 'doancuoiki';
         var url = 'https://api.cloudinary.com/v1_1/'+ cloudName + '/image/upload';
 
@@ -47,7 +54,7 @@ var UpLoadImage = React.createClass({
                     alert(err, null);
                     return;
                 }
-                console.log('UPLOAD COMPLETE: ', JSON.stringify(resp.body));
+                //console.log('UPLOAD COMPLETE: ', JSON.stringify(resp.body));
                 var uploaded = resp.body;
                 
                 var updatedImages = Object.assign([], this.state.images)
@@ -57,13 +64,12 @@ var UpLoadImage = React.createClass({
                 })
             })
         })
-
+        
+        dispatch(actions.completedUpload());
         
    },
    removeImage: function(e) {
         e.preventDefault();
-
-        console.log('removeImage');
 
         var updatedImages = Object.assign([], this.state.images)
             updatedImages.splice(e.target.id, 1);
@@ -72,27 +78,68 @@ var UpLoadImage = React.createClass({
             })
 
    },
+    handleSave: function() {
+        if (this.state.images.length === 0) {
+            return;
+        }
+        var {dispatch, login} = this.props;
+        //console.log(this.state.images);
+        dispatch(actions.saveImageToPg(login.username, this.state.images));
+        dispatch(actions.resetStateUpload());
+        this.setState({images: []});
+    },
     render: function() {
+        var {dispatch, uploadImage} = this.props;
         var list = this.state.images.map((image, k) => {
             return (
                 <li key={k}>
-                    <img style={{width:128}}  src={image.secure_url} alt=""/>
+                    <firgure className="image">
+                        <img  src={image.secure_url} alt=""/>
+                    </firgure>
                     <br/>
-                    <a href="#" onClick={this.removeImage}>remove</a>
+                    <a href="#" onClick={this.removeImage}>Xóa</a>
                 </li>
             )
         })
-
+        var loadMessage = function() {
+            if (uploadImage.isUpload == 1) {
+                return (
+                    <h4>Đang tải ảnh lên.........</h4>
+                )
+            } else if (uploadImage.isUpload == 2) {
+                   return  (
+                        <div>
+                            <h4>Đã tải ảnh lên thành công</h4>
+                        </div>
+                   )
+            }     
+        }
         return (
-            <div>
-                <h2>Upload Images</h2>
-                <Dropzone  onDrop={this.uploadFile}/>
-                <ol>
-                    { list }
-                </ol>
+            <div className="row">
+                <div className="uploadimages">
+                    <h2>Upload Images</h2>
+                    <Dropzone  onDrop={this.uploadFile} className="dropzone"> 
+                        <div>Bấm vào để tải ảnh lên</div>
+                    </Dropzone>
+                </div>
+                <div className="message">
+                    <button className="btn-save" onClick={this.handleSave}>Lưu lại</button>
+                     {loadMessage()}
+                </div>
+                
+                <section className="section-upload-images">
+                    <ul className="my-images-upload">
+                        { list }
+                    </ul>
+                </section>
+                
             </div>
         )
     }
 });
 
-module.exports = connect()(UpLoadImage);
+module.exports = connect(
+    (state) => {
+        return state;
+    }
+)(UpLoadImage);

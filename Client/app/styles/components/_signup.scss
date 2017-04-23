@@ -25,7 +25,17 @@
         margin: 0 auto;
         margin-top: 30px;
     }
+    .message-login {
+        text-align: center;
+        margin: 10px;
+        color: #000;
+
+        .Warring {
+            color: red;
+        }
+    }
 }
+
 
 .signup-form {
     width:  60%;

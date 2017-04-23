@@ -24,36 +24,45 @@
         margin: 0 auto;
         margin-top: 30px;
     }
-}
-
-.login-form {
-    width:  60%;
-    margin: 0 auto;
-
-    label {
-        font-size: 100%;
-        font-weight: 600;
-        word-spacing: 2px;
+    .message-login {
         text-align: center;
-        letter-spacing: 1px;    
-    }
-    .row-btn {
-        text-align: center;
-    }
-    .btn {
-        padding: 10px 30px;
-        font-weight: 600;
-        border-radius: 100px;
-        transition: background-color 0.2s, border 0.2s, color 0.2s;
-        background-color: #3498db;
-        border: 1px solid #3498db;
-        color: #fff;
+        margin: 10px;
+        color: #000;
+
+        .Warring {
+            color: red;
+        }
     }
 
-    .btn:hover,
-    .btn:active {
-        background-color: #2487c9;
-        border: 1px solid #2487c9;
-    }
+    .login-form {
+        width:  60%;
+        margin: 0 auto;
 
+        label {
+            font-size: 100%;
+            font-weight: 600;
+            word-spacing: 2px;
+            text-align: center;
+            letter-spacing: 1px;    
+        }
+        .row-btn {
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 30px;
+            font-weight: 600;
+            border-radius: 100px;
+            transition: background-color 0.2s, border 0.2s, color 0.2s;
+            background-color: #3498db;
+            border: 1px solid #3498db;
+            color: #fff;
+        }
+
+        .btn:hover,
+        .btn:active {
+            background-color: #2487c9;
+            border: 1px solid #2487c9;
+        }
+
+    }
 }
